@@ -1,49 +1,85 @@
 <template>
-  <h2>{{titulo}}</h2>
-  
-  <p>{{ numero }} <sup>2</sup> = {{calcularCuadradoComputado}}</p>
-  <p>{{ numero }} <sup>2</sup> = {{calcularCuadradoComputado}}</p>
-  <div>
-    <button v-on:click="incrementar">+1</button>
-    <button v-on:click="decrementar">-1</button>
-  </div>
-  
+    <h2>{{ this.encabezado }} : {{ valor2 }}</h2>
+
+    <p>{{ this.numero }} <sup>2</sup> = {{ calcularCuadradoComputado }}</p>
+    <p>{{ this.numero }} <sup>2</sup> = {{ calcularCuadradoComputado }}</p>
+    <div>
+        <button v-on:click="incrementar">+1</button>
+        <button @click="decrementar">-1</button> 
+    </div> 
+
+    <div v-if="esVerdad">
+        <h1>Feliz Navidad</h1>
+    </div>
+
 
 
 </template>
 
 <script>
 export default {
-    data(){
-        return{
-            numero:17,
-            titulo:'Contador',
+    data() {
+        return {
+            numero: this.valor,
+            titulo: 'Contador',
         }
     },
-    methods:{
-        calcularCuadrado(){
+    methods: {
+        calcularCuadrado() {
             console.log("Entro a calcular")
-            return this.numero*this.numero;
+            return this.numero * this.numero;
         },
-        incrementar(){
+        incrementar() {
             this.numero++;
         },
-        decrementar(){
+        decrementar() {
             this.numero--;
         }
     },
-    computed:{
-        calcularCuadradoComputado(){
+    computed: {
+        calcularCuadradoComputado() {
             console.log("Entro a calcular computado")
-            return this.numero*this.numero;
+            return this.numero * this.numero;
         }
+    },
+
+    //props: ['encabezado', 'valor'] //se puede usar como una propiedad reactiva
+
+    props:{
+        encabezado:{
+            type:String,
+            required:false,
+            validator(value){
+                return !value.includes('a')
+                    
+                
+            }
+        },
+        valor:Number,
+        valor2:{
+            type:Number,
+            required:false,
+            default:777,
+            validator(value){
+                //programo la validacion bajomi cirterio y retorno
+                //true si es valido y false si no es valido
+                return value<=1000;
+            }
+        },
+        esVerdad:{
+            type:Boolean,
+            required:true,
+        },
+        arreglo:Array,
+        fecha:Date,
+        objetoPersona:Object,
+
     }
 }
-</script>
+</script>   
 
 <style scoped>
-
-button{
+button {
     padding: 5px;
     border: solid 1px #ee9b00;
     border-radius: 5px;
@@ -55,8 +91,7 @@ button{
     font-style: bold;
 }
 
-button:hover{
+button:hover {
     background: #ffba08;
 }
 </style>
-
